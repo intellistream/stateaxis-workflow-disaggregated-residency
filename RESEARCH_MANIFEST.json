@@ -1,0 +1,37 @@
+{
+  "schema_version": "stateaxis-mod-research/v1",
+  "mod_id": "org.vllm-hust.stateaxis-workflow-disaggregated-residency",
+  "release_version": "0.2.0",
+  "source": {
+    "repository": "Qixin-Gaoke/stateaxis",
+    "issue": 20,
+    "scope": "minimum request-level residency policy hook; full cross-instance orchestration remains out of scope"
+  },
+  "mechanism": {
+    "enabled": true,
+    "authority": true,
+    "scope": "stateful-workflow-namespace",
+    "policy": "remote-candidate-local-recovery",
+    "local_instance_id": "local-0",
+    "peer_instance_ids": [
+      "peer-0"
+    ],
+    "generation_bound": true,
+    "request_bound_safe_points": true,
+    "remote_prefetch": false,
+    "peer_transfer_enabled": false,
+    "fallback_to_local_recompute": true,
+    "atomic_recovery": true,
+    "stable_workflow_identity": true,
+    "persistent_remote_ownership": false,
+    "remote_state_allocations": false,
+    "no_state_lifetime_extension": true,
+    "fail_closed": true
+  },
+  "evidence_boundary": {
+    "performance_qualified": false,
+    "remote_transport_claim": false,
+    "cross_instance_orchestration_claim": false,
+    "required_result": "matched OFF/ON exactness, lifecycle, failure-recovery and effect-counter evidence; report performance as unqualified"
+  }
+}

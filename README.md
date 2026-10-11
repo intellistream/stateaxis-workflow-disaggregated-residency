@@ -2,41 +2,60 @@
 
 Extension ID: `org.vllm-hust.stateaxis-workflow-disaggregated-residency`
 
-Workflow-aware multi-instance state ownership, placement and recovery policy.
+This active experimental MOD is the independently reviewable request-level
+residency decision and recovery contract for StateAxis issue
+[#20](https://github.com/Qixin-Gaoke/stateaxis/issues/20). Shuhao Zhang (Tony)
+is directly responsible; no advisor is declared.
 
-This repository is the independent MOD boundary for StateAxis issues [#20](https://github.com/Qixin-Gaoke/stateaxis/issues/20).
-It is deliberately `import_only`, default-off, and cannot be enabled. The split does
-not inherit correctness, device, performance, or publication qualification from the
-aggregate StateAxis repository.
+The v0.2 mechanism applies only to stateful requests. It binds the decision to
+the workflow namespace, state ID and generation, evaluates the reviewed remote
+candidate at a request boundary, and atomically recovers to the already
+verified local state. The contract deliberately disables peer transfer,
+remote prefetch, remote allocation, persistent remote ownership and state
+lifetime extension. This is the safe minimum policy hook requested by issue
+#20, not a completed cross-instance data plane.
 
-## Evidence boundary
+## Activation
 
-Status: **proposal**.
-
-No cross-instance ownership, migration or failure-recovery closure exists; this is an import-only proposal.
-
-The copied evidence and its SHA-256 are recorded in `PROVENANCE.json`. Negative,
-failed, and inconclusive results are retained. Microbenchmarks and component results
-must not be restated as online end-to-end gains.
-
-## Install and inspect
+Activation is default-off and must go through vLLM-HUST Extension Manager/ECPA:
 
 ```bash
 python -m pip install .
-vllm-hust-ext extension inspect org.vllm-hust.stateaxis-workflow-disaggregated-residency
-vllm-hust-ext extension check org.vllm-hust.stateaxis-workflow-disaggregated-residency
+VLLM_HUST_EXT_CONFIG=evidence/ecpa-contract-20261011/manager-config.json \
+  vllm-hust-ext extension check \
+  org.vllm-hust.stateaxis-workflow-disaggregated-residency
+VLLM_HUST_EXT_CONFIG=evidence/ecpa-contract-20261011/manager-config.json \
+  vllm-hust-ext extension plan \
+  org.vllm-hust.stateaxis-workflow-disaggregated-residency
 ```
 
-Discovery does not enable the MOD. A future active revision must extract an
-independently reviewable implementation, declare exclusive resources where needed,
-and pass exactness, lifecycle, release, failure-recovery, and matched real-online
-gates.
+StateAxis accepts only version `0.2.0` and the exact research-manifest SHA-256.
+It binds the MOD identity into assembly/state graph and exposes lifetime counts
+for decisions, stateful candidates, remote candidates, local recoveries and
+fail-closed outcomes.
+
+Rollback is to disable or forget the extension. The local StateAxis state path
+then remains authoritative with no MOD identity or effect counts.
+
+## Evidence boundary
+
+Matched runtime OFF/ON preserves exact output and clean shutdown. ON evaluates
+one generation-bound remote candidate and executes one atomic local recovery;
+it performs zero remote allocations. Extension Manager check, plan, dry-run and
+a real managed assembly-check process also pass.
+
+No repeated real-online NPU test is reported because the reviewed candidate has
+no remote transport to exercise. A device run would measure only host policy
+overhead and could not qualify disaggregated residency. No speedup,
+cross-instance transfer, migration or remote ownership claim is made. See
+[EVIDENCE.md](EVIDENCE.md).
 
 ## Validate
 
 ```bash
 python -m pip install -e '.[test]'
+ruff check .
+ruff format --check .
 pytest -q
+python -m build
 ```
-
-Maintainer: Shuhao Zhang (Tony), directly responsible; no advisor is declared.
