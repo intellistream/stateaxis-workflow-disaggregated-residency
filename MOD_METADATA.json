@@ -16,14 +16,16 @@
     "advisors": []
   },
   "lifecycle": {
-    "status": "experimental",
+    "status": "active_experimental",
     "default_enabled": false,
-    "activation_contract": "Import-only research descriptor; activation is refused until the StateAxis host contract and independent implementation are reviewed.",
-    "rollback_contract": "Disable or forget the descriptor and run the unchanged StateAxis host without this MOD."
+    "activation_contract": "Manifest 0.3 activation is owned by vLLM-HUST Extension Manager/ECPA. StateAxis accepts only version 0.2.0 with the pinned research-manifest hash and reviewed generation-bound remote-candidate/local-recovery policy.",
+    "rollback_contract": "Disable or forget the extension in Extension Manager configuration. StateAxis then admits the same local state directly with no MOD identity or effect counters."
   },
   "scope": {
     "mechanism": "workflow_aware_disaggregated_state_residency",
-    "supported_workloads": [],
+    "supported_workloads": [
+      "generation-bound stateful requests whose workflow identity is the StateAxis namespace scope"
+    ],
     "out_of_scope": [
       "general performance claims",
       "automatic inheritance from StateAxis aggregate evidence"
@@ -31,13 +33,13 @@
   },
   "evidence": {
     "qualification": "unqualified",
-    "latest_result": null,
+    "latest_result": "evidence/ecpa-contract-20261011/RESULT.json",
     "index": "EVIDENCE.md",
     "performance_claims": [
       {
-        "label": "no-performance-claim",
-        "scope": "frozen StateAxis source evidence only",
-        "result": "No cross-instance ownership, migration or failure-recovery closure exists; this is an import-only proposal."
+        "label": "matched-runtime-correctness-positive-remote-transport-unavailable-performance-unqualified",
+        "scope": "request-level StateAxis residency decision and local recovery only",
+        "result": "Matched runtime and managed assembly checks passed. Peer transfer and remote allocation remain disabled, so no cross-instance or performance benefit is claimed."
       }
     ]
   }

@@ -1,0 +1,71 @@
+{
+  "schema_version": "stateaxis-mod-on-off/v1",
+  "date_utc": "2026-10-11",
+  "mod_id": "org.vllm-hust.stateaxis-workflow-disaggregated-residency",
+  "mod_version": "0.2.0",
+  "research_manifest_sha256": "08f941c8737de9477d45be67e21f5a86b2f92dd41e712cd906f7e4ce86a07b39",
+  "evidence_label": "matched-runtime-correctness-positive-remote-transport-unavailable-performance-unqualified",
+  "performance_qualified": false,
+  "host": {
+    "repository": "Qixin-Gaoke/stateaxis",
+    "pull_request": 515,
+    "merge_commit": "6cdc654a3ccf34b6d569c9650d66ce10147a34e5",
+    "activation_mode": "active_experimental",
+    "assembly_and_state_graph_identity_bound": true,
+    "effect_counters": [
+      "decisions_total",
+      "stateful_candidates",
+      "remote_candidates",
+      "local_recoveries",
+      "fail_closed"
+    ]
+  },
+  "manager": {
+    "provider": "stateaxis",
+    "manifest_schema": "0.3-experimental",
+    "check": "passed_with_expected_experimental_degradation",
+    "plan": "passed",
+    "dry_run": "passed",
+    "managed_assembly_check_process": "passed"
+  },
+  "matched_runtime": {
+    "off_identity": null,
+    "off_effect_counts": 0,
+    "on_identity_bound": true,
+    "on_decisions_total": 2,
+    "on_stateful_candidates": 1,
+    "on_remote_candidates": 1,
+    "on_local_recoveries": 1,
+    "on_fail_closed": 0,
+    "exact_output_match": true,
+    "requests_completed": 2,
+    "lifecycle_shutdown": "passed",
+    "remote_allocations": 0
+  },
+  "matched_assembly": {
+    "off_fingerprint_sha256": "9890e4967303c4a3048fa2790ff647f4d06589edad6883a0ce04bd29c096ac9d",
+    "on_fingerprint_sha256": "d2422a3dd0f5b8bb98ffab721ed707df65e0bcc84a44f1f641306ad507a11776"
+  },
+  "benchmark_outline": {
+    "matched_real_online_status": "NOT_RUN_REMOTE_TRANSPORT_UNAVAILABLE",
+    "reason": "The reviewed active contract grants no peer-transfer or remote-allocation authority. Running a device workload could measure only the small host decision overhead and cannot qualify the named disaggregated-residency mechanism.",
+    "future_gate": "Implement identity-bound peer transport, saturation injection and atomic migration recovery before a 3+3 fresh-service OFF/ON NPU matrix."
+  },
+  "validation": {
+    "python_tests": "2 passed",
+    "ruff_check": "passed",
+    "ruff_format_check": "passed",
+    "rust_library_tests": "426 passed",
+    "cargo_check_lib_bins": "passed",
+    "matched_runtime_on_off": "passed",
+    "matched_assembly_on_off": "passed",
+    "extension_manager_check_plan_dry_run": "passed",
+    "managed_assembly_check_process": "passed"
+  },
+  "limitations": [
+    "peer transfer is disabled",
+    "remote state allocation and persistent remote ownership are disabled",
+    "the local recovery path does not establish cross-instance orchestration",
+    "there is no accelerator performance result or speedup claim"
+  ]
+}
