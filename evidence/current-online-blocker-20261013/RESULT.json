@@ -1,0 +1,88 @@
+{
+  "schema_version": "stateaxis-mod-blocker/v1",
+  "date_utc": "2026-10-13",
+  "mod_id": "org.vllm-hust.stateaxis-workflow-disaggregated-residency",
+  "mod_version": "0.2.0",
+  "evidence_label": "current-online-blocked-no-remote-data-plane",
+  "performance_qualified": false,
+  "matched_real_online_status": "NOT_RUN_MECHANISM_ABSENT",
+  "repositories": {
+    "mod": {
+      "canonical": "intellistream/stateaxis-workflow-disaggregated-residency",
+      "commit": "f250c2cf9d52faf785c1a54b833dc2bdc34233b9",
+      "dirty": false,
+      "research_manifest_sha256": "08f941c8737de9477d45be67e21f5a86b2f92dd41e712cd906f7e4ce86a07b39",
+      "extension_manifest_sha256": "568ab41ef4d571eb7c1c7b167ed866b1ef1249f9a642a37cea2540eacf144e7e"
+    },
+    "host": {
+      "canonical": "Qixin-Gaoke/stateaxis",
+      "commit": "16f6c9178c4a7820b4175e34829fa357e6c9ba80",
+      "dirty": false,
+      "native_runtime_sha256": "0455d26881a324900ea189a85b68091c93738cacb7e9506617a9fbc85ddb318b"
+    },
+    "extension_manager": {
+      "commit": "49a63b7c9306509780f983823c4d7027c7f445c7",
+      "dirty": false
+    }
+  },
+  "hardware_observation": {
+    "visible_devices": [4, 5],
+    "both_idle": true,
+    "npu_processes": 0,
+    "snapshot_sha256": "dac79f8b2bcc18408de3feb2f802c2dc17afd3eb4647e386101ab0f58bc83b33",
+    "npu_run_started": false,
+    "reason": "Idle hardware cannot qualify a mechanism whose reviewed contract forbids peer transfer and remote allocation."
+  },
+  "source_contract": {
+    "file": "src/native_runtime.rs",
+    "commit_bound": true,
+    "required_false": [
+      "remote_prefetch",
+      "peer_transfer_enabled",
+      "persistent_remote_ownership",
+      "remote_state_allocations"
+    ],
+    "required_true": [
+      "fallback_to_local_recompute",
+      "atomic_recovery",
+      "no_state_lifetime_extension",
+      "fail_closed"
+    ],
+    "only_legal_candidate_outcome": "increment remote_candidates then local_recoveries; execute no transfer or allocation"
+  },
+  "validation": {
+    "command": "cargo test --lib workflow_disaggregated_residency -- --nocapture",
+    "passed": 2,
+    "failed": 0,
+    "filtered_out": 431,
+    "covers": [
+      "hash-bound fail-closed activation",
+      "matched runtime OFF/ON exactness",
+      "effect counting and local recovery"
+    ],
+    "does_not_cover": [
+      "peer transport",
+      "remote allocation",
+      "cross-instance ownership",
+      "accelerator performance"
+    ]
+  },
+  "blocker": {
+    "classification": "implementation_capability_missing",
+    "reason": "The active v0.2 contract intentionally contains no peer-transfer, remote-allocation or persistent-ownership authority. Device ON/OFF would measure host policy accounting only and cannot qualify workflow-disaggregated residency.",
+    "not_blocked_by": [
+      "NPU availability",
+      "activation discovery",
+      "host exactness",
+      "lifecycle shutdown"
+    ]
+  },
+  "recovery_gate": [
+    "implement an identity-bound peer transport and remote allocation lifecycle",
+    "bind source and destination instance, state generation, byte layout and ownership transfer into the MOD identity",
+    "add saturation, cancellation, stale-generation and partial-transfer fault injection",
+    "prove atomic rollback and resource release before performance testing",
+    "run at least three interleaved fresh-service OFF/ON pairs on a workload with measured remote-state hits",
+    "record exactness, transfer bytes, remote hit rate, TTFT, TPOT, throughput, HBM and lifecycle cleanup"
+  ]
+}

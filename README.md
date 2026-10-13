@@ -49,6 +49,8 @@ no remote transport to exercise. A device run would measure only host policy
 overhead and could not qualify disaggregated residency. No speedup,
 cross-instance transfer, migration or remote ownership claim is made. See
 [EVIDENCE.md](EVIDENCE.md).
+The commit-bound blocker, idle-device snapshot and exact recovery gates are in
+`evidence/current-online-blocker-20261013/`.
 
 ## Validate
 
