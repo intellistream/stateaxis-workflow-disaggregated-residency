@@ -32,8 +32,8 @@
     ]
   },
   "evidence": {
-    "qualification": "unqualified",
-    "latest_result": "evidence/ecpa-contract-20261011/RESULT.json",
+    "qualification": "current-online-blocked-no-remote-data-plane",
+    "latest_result": "evidence/current-online-blocker-20261013/RESULT.json",
     "index": "EVIDENCE.md",
     "performance_claims": [
       {
